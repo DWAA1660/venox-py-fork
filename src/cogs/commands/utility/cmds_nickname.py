@@ -18,8 +18,7 @@ def cog_creator(servers: List[int]):
         async def correct_nickname(self, after: discord.Member):
             try:
                 # result = await self.guild_nick_name.find_one({"guild_id": before.guild.id})
-                nicknames = await self.nick_names.find_one({"guild_id": after.guild.id})
-                if nicknames is None:
+                if (nicknames := await self.nick_names.find_one({"guild_id": after.guild.id})) is None:
                     return
 
                 print("Server contains blacklist")
@@ -119,8 +118,7 @@ def cog_creator(servers: List[int]):
             try:
                 await ctx.response.defer(ephemeral=True)
                 # data = {"nicknames": [name], "guild_id": ctx.guild.id}
-                result = await self.nick_names.find_one({"guild_id": ctx.guild.id})
-                if result is None:
+                if (result := await self.nick_names.find_one({"guild_id": ctx.guild.id})) is None:
                     data = {"nicknames": [name.lower()], "guild_id": ctx.guild.id}
                     await self.nick_names.insert_one(data)
                     await ctx.respond(
@@ -168,8 +166,7 @@ def cog_creator(servers: List[int]):
             try:
                 await ctx.response.defer(ephemeral=True)
                 # data = {"nicknames": [name], "guild_id": ctx.guild.id}
-                result = await self.nick_names.find_one({"guild_id": ctx.guild.id})
-                if result is None:
+                if (result := await self.nick_names.find_one({"guild_id": ctx.guild.id})) is None:
                     await ctx.respond(
                         f"Nickname `{name}` is not on the Blacklist",
                         ephemeral=True
@@ -216,8 +213,7 @@ def cog_creator(servers: List[int]):
             try:
                 await ctx.response.defer(ephemeral=hide)
 
-                result = await self.nick_names.find_one({"guild_id": ctx.guild.id})
-                if result is None:
+                if (result := await self.nick_names.find_one({"guild_id": ctx.guild.id})) is None:
                     await ctx.respond(
                         "No Nicknames blacklisted on this server.",ephemeral=hide
                         )

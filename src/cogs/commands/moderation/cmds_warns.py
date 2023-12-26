@@ -50,9 +50,8 @@ def cog_creator(servers: List[int]):
                     )
                 return
 
-            last_digit = count % 10
 
-            if last_digit == 1:
+            if (last_digit := count % 10) == 1:
                 count = str(count) + "st"
             elif last_digit == 2:
                 count = str(count) + "nd"

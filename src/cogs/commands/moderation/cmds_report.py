@@ -89,8 +89,7 @@ def cog_creator(servers: List[int]):
                     ephemeral=True)
                 return
 
-            local_report_channel = ctx.guild.get_channel(local_report_channel_id)
-            if local_report_channel is None:
+            if (local_report_channel := ctx.guild.get_channel(local_report_channel_id)) is None:
                 await self.bot.log_msg(
                     f"`{ctx.user}` tried to report on `{ctx.guild.name}`,"\
                     f" local report channel for `{ctx.guild.name}` not found."

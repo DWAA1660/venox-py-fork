@@ -15,9 +15,8 @@ def cog_creator(servers: List[int]):
             self.bot.loop.create_task(self.connect_nodes())
 
         async def check_voice(self, ctx: ApplicationContext):
-            user_voice_state = ctx.user.voice
 
-            if user_voice_state is None:
+            if (user_voice_state := ctx.user.voice) is None:
                 await ctx.respond(
                     "Please connect to a VC first before using this command.",
                     ephemeral=True

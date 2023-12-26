@@ -28,8 +28,7 @@ def cog_creator(servers: List[int]):
                     )
                 return
 
-            guild = self.bot.get_guild(guild_id)
-            if guild is None:
+            if (guild := self.bot.get_guild(guild_id)) is None:
                 await ctx.respond(
                     f"Couldn't find the guild with id of `{guild_id}`",
                     ephemeral=True

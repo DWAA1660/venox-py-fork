@@ -26,13 +26,11 @@ def cog_creator(servers: List[int]):
                 delete = []
                 async for result in self.thread_channel_collections.find({}):
                     # data = {"guild_id": ctx.guild.id, "guildname": ctx.guild.name, "channel_db_id": ctx.channel.id}
-                    guild = self.bot.get_guild(result["guild_id"])
-                    if guild is None:
+                    if (guild := self.bot.get_guild(result["guild_id"])) is None:
                         delete.append(result)
                         continue
 
-                    channel = guild.get_channel(result["channel_db_id"])
-                    if channel is None:
+                    if (channel := guild.get_channel(result["channel_db_id"])) is None:
                         delete.append(result)
                         continue
 

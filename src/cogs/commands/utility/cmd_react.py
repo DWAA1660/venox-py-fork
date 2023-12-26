@@ -42,8 +42,7 @@ def cog_creator(servers: List[int]):
                     ephemeral=True
                     )
 
-            message = await ctx.fetch_message(message_id)
-            if message == None:
+            if (message := await ctx.fetch_message(message_id)) == None:
                 await ctx.respond(
                     f"Message with id `{message_id}` not found.",
                     ephemeral=True
@@ -76,8 +75,7 @@ def cog_creator(servers: List[int]):
                 return
 
             emojis_list = emojis.split(' ')
-            resullts = await self.react_channel_static.find_one({'channel': channel.id})
-            if resullts is None:
+            if (resullts := await self.react_channel_static.find_one({'channel': channel.id})) is None:
                 self.react_channel_static.insert_one({'channel': channel.id, 'emojis': list(emojis_list)})
                 await ctx.respond('Added channel')
                 return
@@ -97,8 +95,7 @@ def cog_creator(servers: List[int]):
                         ephemeral=True
                         )
                 return
-            results =  await self.react_channel_static.find_one({ 'channel': channel.id})
-            if results is not None:
+            if (results := await self.react_channel_static.find_one({ 'channel': channel.id})) is not None:
                 await self.react_channel_static.delete_one({ 'channel': channel.id})
                 await ctx.respond('Removed static react channel')
                 return
@@ -118,8 +115,7 @@ def cog_creator(servers: List[int]):
                         ephemeral=True
                         )
                 return
-            results = await self.react_channel_dynamic.find_one({'channel': channel.id})
-            if results is None:
+            if (results := await self.react_channel_dynamic.find_one({'channel': channel.id})) is None:
                 await self.react_channel_dynamic.insert_one({'channel': channel.id})
                 await ctx.respond('Added channel')
                 return
@@ -128,8 +124,7 @@ def cog_creator(servers: List[int]):
 
         @staticmethod
         async def dynamic_listener(self, message):
-            results = await self.react_channel_dynamic.find_one({'channel': message.channel.id})
-            if results is not None:
+            if (results := await self.react_channel_dynamic.find_one({'channel': message.channel.id})) is not None:
                 line_list = message.content.split('\n')
                 message_content = ' '.join(line_list)
                 message_list = message_content.split(' ')

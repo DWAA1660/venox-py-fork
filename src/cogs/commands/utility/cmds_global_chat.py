@@ -36,10 +36,9 @@ def cog_creator(servers: List[int]):
 
             try:
                 await ctx.response.defer(ephemeral=False)
-                result = await self.global_chat.find_one(
+                if (result := await self.global_chat.find_one(
                     {"channel1": channel1, "channel2": channel2}
-                    )
-                if result is None:
+                    )) is None:
                     data = {"channel1": int(channel1), "channel2": int(channel2)}
                     await self.global_chat.insert_one(data)
                     await ctx.respond(
@@ -87,10 +86,8 @@ def cog_creator(servers: List[int]):
                 data = {"channel1": int(channel1), "channel2": int(channel2)}
                 data2 = {"channel2": int(channel1), "channel1": int(channel2)}
                 await ctx.response.defer(ephemeral=False)
-                result = await self.global_chat.find_one(data)
-                if result is None:
-                    result2 = await self.global_chat.find_one(data2)
-                    if result2 is None:
+                if (result := await self.global_chat.find_one(data)) is None:
+                    if (result2 := await self.global_chat.find_one(data2)) is None:
                         await ctx.respond(
                             "Those channels are not in db"
                             )

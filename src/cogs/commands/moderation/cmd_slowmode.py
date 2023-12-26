@@ -42,8 +42,7 @@ def cog_creator(servers: List[int]):
             data = {"channel_id": ctx.channel.id, "amount_of_messages_per_min": msgs_per_min, "minimum_of_messages_per_minute": min_msges_per_min,
                     "slowmode_time": max_slowmode_time, "defaultslowmode": default_slowmode}
             try:
-                find = await self.slowmode_db.find_one({"channel_id": ctx.channel.id})
-                if find is None:
+                if (find := await self.slowmode_db.find_one({"channel_id": ctx.channel.id})) is None:
                     await self.slowmode_db.insert_one(data)
                     self.slowmode_map[ctx.channel.id] = data
                     await ctx.respond(
@@ -83,8 +82,7 @@ def cog_creator(servers: List[int]):
                 return
 
             try:
-                find = self.slowmode_db.find_one({"channel_id": ctx.channel.id})
-                if find is None:
+                if (find := self.slowmode_db.find_one({"channel_id": ctx.channel.id})) is None:
                     await ctx.respond(
                         "Slowmode is not enabled for this channel.",
                         ephemeral=True
@@ -166,8 +164,7 @@ def cog_creator(servers: List[int]):
                 delete = []
                 async for result in self.slowmode_db.find({}):
 
-                    channel = self.bot.get_channel(result["channel_id"])
-                    if channel is None:
+                    if (channel := self.bot.get_channel(result["channel_id"])) is None:
                         delete.append(result)
                         continue
 

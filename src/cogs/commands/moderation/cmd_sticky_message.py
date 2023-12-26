@@ -28,8 +28,7 @@ def cog_creator(servers: List[int]):
                 async for result in self.sticky_collections.find({}):
 
                     # data = {"channel_id": ctx.channel.id, "message_id": message.id, "guild_id": ctx.guild.i}
-                    channel = self.bot.get_channel(result["channel_id"])
-                    if channel is None:
+                    if (channel := self.bot.get_channel(result["channel_id"])) is None:
                         delete.append(result)
                         continue
 
@@ -62,8 +61,7 @@ def cog_creator(servers: List[int]):
                 if message.channel.id not in self.message_channel_map.keys():
                     return
 
-                msg = await message.channel.fetch_message(self.message_channel_map[message.channel.id])
-                if msg is None:
+                if (msg := await message.channel.fetch_message(self.message_channel_map[message.channel.id])) is None:
                     await self.sticky_collections.delete_many({"channel_id": message.channel.id})
                     return
 
@@ -115,8 +113,7 @@ def cog_creator(servers: List[int]):
                 return
 
             message_id = int(message_id)
-            message = await ctx.channel.fetch_message(message_id)
-            if message is None:
+            if (message := await ctx.channel.fetch_message(message_id)) is None:
                 await ctx.respond(
                     f"The message `{message_id}` does not exist. Please try again with a different message id.",
                     ephemeral=True)
@@ -177,15 +174,13 @@ def cog_creator(servers: List[int]):
                 return
 
             try:
-                result = await self.sticky_collections.find_one({"channel_id": ctx.channel.id})
-                if result is None:
+                if (result := await self.sticky_collections.find_one({"channel_id": ctx.channel.id})) is None:
                     await ctx.respond(
                         "No sticky message is set for this channel.",
                         ephemeral=True)
                     return
 
-                message = await ctx.channel.fetch_message(result["message_id"])
-                if message is None:
+                if (message := await ctx.channel.fetch_message(result["message_id"])) is None:
                     await self.sticky_collections.delete_many({"channel_id": ctx.channel.id})
                     self.message_channel_map.pop(ctx.channel.id, None)
                     await self.sticky_collections.delete_many({"channel_id": ctx.channel.id})

@@ -54,8 +54,7 @@ def cog_creator(servers: List[int]):
 
             for guild in self.bot.guilds:
 
-                guild_member = guild.get_member(member.id)
-                if guild_member is None:
+                if (guild_member := guild.get_member(member.id)) is None:
                     continue
 
                 try:
