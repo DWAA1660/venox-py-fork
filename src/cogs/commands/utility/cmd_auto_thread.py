@@ -122,7 +122,7 @@ def cog_creator(servers: List[int]):
                 await self.thread_channel_collections.replace_one(result, data)
                 self.thread_guild_map[ctx.guild.id] = ctx.channel.id
                 await ctx.respond(
-                    f"Auto Threading is now enabled for this channel" + (
+                    "Auto Threading is now enabled for this channel" + (
                     f", and is now disabled in {prev_channel.mention}." if prev_channel is not None else "."),
                     ephemeral=True
                     )
