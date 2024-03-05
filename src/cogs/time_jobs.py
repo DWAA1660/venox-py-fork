@@ -1,10 +1,10 @@
 import asyncio
-import random
 from typing import List
 import discord
 from discord.ext import tasks
 from cogs import BaseCog
 from discord import Game, Activity, ActivityType
+import secrets
 
 def cog_creator(servers: List[int]):
     class TimeJob(BaseCog):
@@ -38,7 +38,7 @@ def cog_creator(servers: List[int]):
                 ["over lasertag.venox.network", 3],
                 ["on lasertag.venox.network", 1]
             ]
-            current_status = random.choice(statuses)
+            current_status = secrets.SystemRandom().choice(statuses)
             await self.bot.change_presence(activity=discord.Activity(name=current_status[0], type=current_status[1]))
 
         @activity_job.before_loop
