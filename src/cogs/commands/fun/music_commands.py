@@ -199,7 +199,7 @@ def cog_creator(servers: List[int]):
 
             if not self.check_perms(ctx, required_perms):
                 await ctx.respond(
-                    f"Sorry, only mods can stop the music.",
+                    "Sorry, only mods can stop the music.",
                     ephemeral=True
                     )
                 return
@@ -260,7 +260,7 @@ def cog_creator(servers: List[int]):
 
             if not self.check_perms(ctx, required_perms):
                 await ctx.respond(
-                    f"Sorry, only mods can disconnect the bot from VCs.",
+                    "Sorry, only mods can disconnect the bot from VCs.",
                     ephemeral=True
                     )
                 return

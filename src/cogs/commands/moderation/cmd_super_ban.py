@@ -46,7 +46,7 @@ def cog_creator(servers: List[int]):
 
             try:
                 await member.send(
-                    f"You have been banned from **all** Venox Network Servers,"\
+                    "You have been banned from **all** Venox Network Servers,"\
                     " for `{reason}`."\
                     "Responsible owner: `{ctx.user.name}#{ctx.user.discriminator}`")
             except Exception:
